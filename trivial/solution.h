@@ -1,8 +1,8 @@
-#ifndef __SOLUTION_H_INCLUDED
-#define __SOLUTION_H_INCLUDED
+#ifndef __TRIVIAL__SOLUTION_H_INCLUDED
+#define __TRIVIAL__SOLUTION_H_INCLUDED
 
 struct Solution {
   void run() {}
 };
 
-#endif // __SOLUTION_H_INCLUDED
+#endif // __TRIVIAL__SOLUTION_H_INCLUDED
