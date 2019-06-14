@@ -16,6 +16,19 @@ protected:
   mutex_t &mutex() { return _mutex; }
 };
 
+template <class MutexType>
+class with_basic_static_mutex {
+  using mutex_t = MutexType;
+  static mutex_t _mutex;
+protected:
+  using scoped_lock_t = std::scoped_lock<mutex_t>;
+  static mutex_t &mutex() { return _mutex; }
+};
+
+template <class MutexType>
+MutexType with_basic_static_mutex<MutexType>::_mutex;
+
 using with_mutex = with_basic_mutex<std::mutex>;
+using with_static_mutex = with_basic_static_mutex<std::mutex>;
 
 #endif // __WITH_MUTEX_H_INCLUDED
