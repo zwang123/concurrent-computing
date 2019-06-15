@@ -1,4 +1,4 @@
-CC          := g++ -O0 -g -Wall -std=c++17 -Wextra -pedantic 
+CC          := g++ -O0 -g -Wall -std=c++17 -Wextra -pedantic -Wno-comment
 INC         := 
 LIBS        := -pthread
 SRC         := $(wildcard *.cpp)
