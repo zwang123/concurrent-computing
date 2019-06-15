@@ -8,17 +8,6 @@
 #define DEFAULT_NUM_THREADS 4
 #endif
 
-#include <utility>
-struct ThreadRAII {
-  std::thread thread;
-
-  template <class ...Args>
-  explicit ThreadRAII(Args&&... args) : thread(std::forward<Args>(args)...) {}
-  ThreadRAII(const ThreadRAII&) = delete;
-  ThreadRAII(ThreadRAII&& other) : thread(std::move(other.thread)) {}
-
-  ~ThreadRAII() {if (thread.joinable()) thread.join();}
-};
 
 //#include <algorithm>
 //#include <functional>
@@ -29,6 +18,7 @@ struct ThreadRAII {
 //#define join_threads(threads) \
   for (auto &th : threads) th.join()
 
+#include "../ThreadRAII.h"
 #define join_threads(threads) 
 
 
