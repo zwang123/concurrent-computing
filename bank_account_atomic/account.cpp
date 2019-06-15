@@ -1,19 +1,29 @@
 #include "account.h"
 
+// TODO is not atomic between += and -=
 bool Account::deposit(double amount)
 {
-  if (amount < 0.) return false; // cannot deposit negative
-  userBalance += amount * mult;
+  // cannot deposit negative or overflow
+  if (amount < 0. || amount > max_amount) return false;
+  int amt_mult = amount * mult;
+  if ((userBalance += amt_mult) < 0) {
+    // overflow
+    userBalance -= amt_mult;
+    return false;
+  }
   return true;
 }
 
-// compare and store should be atomic TODO
-//bool Account::withdraw(double amount)
-//{
-//  if (amount < 0.) return false; // cannot withdraw negative
-//  unsigned amt_mult = amount * mult;
-//  unsigned og = userBalance.fetch_sub(amt_mult);
-//  if (userBalance > og) return false; // insufficient fund
-//  userBalance -= amt_mult;
-//  return true;
-//}
+bool Account::withdraw(double amount)
+{
+  // cannot withdraw negative or overflow
+  if (amount < 0. || amount > max_amount) return false;
+
+  int amt_mult = amount * mult;
+  if ((userBalance -= amt_mult) < 0) {
+    // insufficient fund
+    userBalance += amt_mult;
+    return false;
+  }
+  return true;
+}
