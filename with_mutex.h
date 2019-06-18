@@ -6,6 +6,8 @@
 
 #define define_scoped_lock(lock) \
   scoped_lock_t lock(mutex());
+#define define_unique_lock(lock) \
+  unique_lock_t lock(mutex());
 
 template <class MutexType>
 class with_basic_mutex {
@@ -13,6 +15,7 @@ class with_basic_mutex {
   mutex_t _mutex;
 protected:
   using scoped_lock_t = std::scoped_lock<mutex_t>;
+  using unique_lock_t = std::unique_lock<mutex_t>;
   mutex_t &mutex() { return _mutex; }
 };
 
